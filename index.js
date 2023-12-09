@@ -1,6 +1,6 @@
 const helpers = require("dataform-ga4-helpers");
-const sessionHelpers = require("includes/helpers");
-const { processingSteps } = require("includes/processing_steps");
+const sessionHelpers = require("./includes/helpers");
+const { processingSteps } = require("./includes/processing_steps");
 for (const funcName in sessionHelpers) {
   if (typeof sessionHelpers[funcName] === "function") {
     helpers[funcName] = sessionHelpers[funcName];
@@ -12,9 +12,9 @@ const {
   sessionPresets,
   defaultSourceMediumRules,
   defaultPostProcessing,
-} = require("includes/constants");
+} = require("./includes/constants");
 
-const { defaultAssertions } = require("includes/assertions");
+const { defaultAssertions } = require("./includes/assertions");
 
 const bigQueryOptions = [
   "clusterBy",
