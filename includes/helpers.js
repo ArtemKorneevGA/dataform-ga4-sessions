@@ -41,7 +41,7 @@ function getSqlCondition(condition) {
 }
 
 function getSqlSourceCategoriesTable() {
-  const { rows } = require("includes/ga4_source_categories.js");
+  const { rows } = require("./includes/ga4_source_categories.js");
   return getSqlUnionAllFromRows(rows);
 }
 

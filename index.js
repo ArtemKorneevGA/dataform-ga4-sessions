@@ -454,6 +454,6 @@ class Sessions {
 }
 
 module.exports = {
-  declareSources: helpers.declareSources,
+  declareSources: (config) => helpers.declareSources(config),
   Sessions,
 };
