@@ -240,6 +240,20 @@ sessions.publish();
 
 The order is important as each step uses the preceding step. So you can't skip the channel step and have a last_non_direct step. But you could delete all the steps, and add your own processing steps.
 
+
+### Adding updatePartitionFilter
+
+You could filter rows in a incremental table adding [updatePartitionFilter](https://cloud.google.com/dataform/docs/incremental-tables#filter_rows_in_an_incremental_table):
+
+```javascript
+const sessions = new ga4.Sessions(sessionConfig);
+sessions.updatePartitionFilter = "date >= date_sub(current_date(), interval 5 day)"
+sessions.publish();
+```
+
+Actually this way you can add any of [IBigQueryOptions](https://cloud.google.com/dataform/docs/reference/dataform-core-reference#bigquery)
+
+
 ## How package works
 
 The package provides Session class with `publish` method that generates SQL and then uses Dataform core [publish](https://cloud.google.com/dataform/docs/reference/dataform-core-reference#publish) method to generate incremental and non-incremental session table.
