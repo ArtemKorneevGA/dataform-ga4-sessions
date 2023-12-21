@@ -121,7 +121,7 @@ You should specify the value type: string, int, double, float. For example `stri
 ```javascript
 const sessions = new ga4.Sessions(sessionConfig);
 
-sessions.addEventParam([{ name: "session_engaged", type: "string" }]);
+sessions.addEventParams([{ name: "ignore_referrer", type: "string" }]);
 sessions.publish();
 ```
 
