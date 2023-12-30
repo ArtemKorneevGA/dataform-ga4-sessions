@@ -16,7 +16,23 @@ const sessionConfig = {
   nonIncrementalTableEventStepWhere: "user_pseudo_id = '950658449.1697698986'",
 };
 
-const sessions = new ga4.Sessions(sessionConfig);
+// const sessions = new ga4.Session(sessionConfig);
+
+// // Rename table
+// sessions.target = {
+//   tableName: "sessions_event_step_where",
+// };
+
+// // Unit testing working only for table type
+// sessions.getConfig = () => {
+//   return {
+//     type: "table",
+//     schema: sessionConfig.dataset,
+//     tags: [sessionConfig.dataset],
+//   };
+// };
+
+const sessions = new ga4.Session(sessionConfig);
 
 // Rename table
 sessions.target = {
@@ -31,6 +47,7 @@ sessions.getConfig = () => {
     tags: [sessionConfig.dataset],
   };
 };
+
 
 // Publish session model
 sessions.publish();

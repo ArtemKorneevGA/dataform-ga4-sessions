@@ -124,6 +124,8 @@ function getSqlDefaultChannelGrouping(source, medium, source_category) {
     `;
 }
 
+
+
 module.exports = {
   getSqlSourceMediumCaseStatement,
   getSqlDefaultChannelGrouping,

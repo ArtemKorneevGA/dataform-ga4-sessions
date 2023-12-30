@@ -7,7 +7,7 @@ const sessionConfig = {
 };
 
 // Create new sessions model object
-const sessions = new ga4.Sessions(sessionConfig);
+const sessions = new ga4.Session(sessionConfig);
 
 //
 sessions.publish();

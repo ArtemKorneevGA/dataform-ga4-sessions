@@ -91,7 +91,9 @@ const processingSteps = [
             last_value(if(last_click_attribution.channel = 'Direct', null, last_click_attribution) ignore nulls) over(
               partition by user_pseudo_id
               order by UNIX_SECONDS(session_start)
-              range between ${session.LastNonDirectLookBackWindow*60*60*24} preceding and 1 preceding 
+              range between ${
+                session.lastNonDirectLookBackWindow * 60 * 60 * 24
+              } preceding and 1 preceding 
             ),
             last_click_attribution
           ) as last_non_direct_attribution,

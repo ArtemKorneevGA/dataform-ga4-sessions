@@ -15,7 +15,7 @@ const sessionConfig = {
   nonIncrementalTableName: dataform.projectConfig.vars.GA4_TABLE,
 };
 
-const sessions = new ga4.Sessions(sessionConfig);
+const sessions = new ga4.Session(sessionConfig);
 
 // Rename table
 sessions.target = {
@@ -41,7 +41,6 @@ sessions.addQueryParameters([
   { name: "gbraid" },
   { name: "gclid", columnName: "gclid_url" },
 ]);
-
 
 // Publish session model
 sessions.publish();
