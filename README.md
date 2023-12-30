@@ -1,5 +1,5 @@
 <p align="center">
-      <img src="img/logo.png" alt="dataform-ga4-sessions logo" width="150px" />
+      <img src="assets/logo.png" alt="dataform-ga4-sessions logo" width="150px" />
 </p>
 
 # dataform-ga4-sessions
