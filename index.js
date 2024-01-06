@@ -211,11 +211,28 @@ class DataformAction {
      */
     this._queryParameters = [];
 
+    /**
+     * @property {Object[]} itemColumns - List of child columns to keep in the final table from `items` column. By default `itemColumns` are not added, and if items added as a column all child columns wil be added. You could add itemColumns manually using `addItemColumns` method.
+     * @property {String} itemColumns[].name - Name of child column the column in GA4 raw table.
+     * @property {String} [itemColumns[].columnName] - Optional. The name of the column in the result table. If not provided the name will be the same as `itemColumns[].name`.
+     */
+    this._itemColumns = [];
+
+    /**
+     * @property {Object[]} itemParams - List of event params of item scope  unnested from GA4 raw table items.item_params column. By default `itemParams` are not added. You could add your custom item_params using `addItemParams` method.
+     * @property {String} itemParams[].name - The value of `key` in the items.item_params record.
+     * @property {String} [itemParams[].columnName] - Optional. The name of the column in the result table. If not provided the name will be the same as `itemParams[].name`.
+     * @property {'string' | 'int' | 'double' | 'float' | 'coalesce' | 'coalesce_float'} [userProperties[].type] - Optional. The name of the value in the event_params column. By default `string`.
+     */
+    this._itemParams = [];
+
     const properties = [
       "columns",
       "eventParams",
       "userProperties",
       "queryParameters",
+      "itemColumns",
+      "itemParams",
     ];
 
     properties.forEach((prop) => {
@@ -331,6 +348,52 @@ class DataformAction {
   addQueryParameters(queryParameters) {
     this.#addItemsToProperty(queryParameters, "queryParameters");
   }
+  /**
+   *
+   * @property {Object[]} itemColumns - List of child columns to keep in the final table from `items` column. By default `itemColumns` are not added, and if items added as a column all child columns wil be added. You could add itemColumns manually using `addItemColumns` method.
+   * @property {String} itemColumns[].name - Name of child column the column in GA4 raw table.
+   * @property {String} [itemColumns[].columnName] - Optional. The name of the column in the result table. If not provided the name will be the same as `itemColumns[].name`.
+   * @example
+   * ```js
+   * purchase.addItemColumns([
+   * { name: "item_id" },
+   * { name: "item_name" },
+   * { name: "price" },
+   * { name: "quantity" },
+   * ])
+   * ```
+   * @description
+   * :::note
+   * Supported only in Event class
+   * :::
+   * In the example below from items columns only `item_id`, `item_name`, `price`, `quantity` will be added to the final table in the `items.item_id`, `items.item_name`, `items.price`, `items.quantity` accordingly.
+   */
+  addItemColumns(itemColumns) {
+    this.#addItemsToProperty(itemColumns, "itemColumns");
+  }
+
+  /**
+   *
+   * @property {Object[]} itemParams - List of names of item-scoped custom dimensions to extract  from `items.item_params` by key.  By default `itemParams` are not added. You could add itemParams manually using `addItemParams` method.
+   * @property {String} itemParams[].name - Name of item-scoped custom dimensions.
+   * @property {String} [itemParams[].columnName] - Optional. The name of the column in the result table. If not provided the name will be the same as `itemParams[].name`.
+   * @param {'string' | 'int' | 'double' | 'float' | 'coalesce' | 'coalesce_float'} [userProperties[].type] - Optional. The type of the value in the `items.item_params` column. By default `string`.
+   * @example
+   * ```js
+   * purchase.addItemParams([
+   * { name: "color" , columnName: "item_color"},
+   * ])
+   * ```
+   * @description
+   * :::note
+   * Supported only in Event class
+   * :::
+   * In the example below the items.item_params column will be expanded and filtered for the key color. The resulting string values will be stored in items.item_color.
+   */
+  addItemParams(itemParams) {
+    this.#addItemsToProperty(itemParams, "itemParams");
+  }
+
   /**
    * Helper method to generate SQL code to get unique id for each row in a final table, used inside publish method. Should be overwritten in the child class.
    */
@@ -519,6 +582,50 @@ class Event extends DataformAction {
     this._timestampEventParamName = timestampEventParamName;
   }
   /**
+   *
+   * @property {Object[]} itemColumns - List of child columns to keep in the final table from `items` column. By default `itemColumns` are not added, and if items added as a column all child columns wil be added. You could add itemColumns manually using `addItemColumns` method.
+   * @property {String} itemColumns[].name - Name of child column the column in GA4 raw table.
+   * @property {String} [itemColumns[].columnName] - Optional. The name of the column in the result table. If not provided the name will be the same as `itemColumns[].name`.
+   * @example
+   * ```js
+   * purchase.addItemColumns([
+   * { name: "item_id" },
+   * { name: "item_name" },
+   * { name: "price" },
+   * { name: "quantity" },
+   * ])
+   * ```
+   * @description
+   * :::warning
+   * If you provide doesn't existing column name in the `itemColumns` list, you will get a SQL error and can't build the table.
+   * :::
+   * In the example below from items columns only `item_id`, `item_name`, `price`, `quantity` will be added to the final table in the `items.item_id`, `items.item_name`, `items.price`, `items.quantity` accordingly.
+   */
+  addItemColumns(itemColumns) {
+    super.addItemColumns(itemColumns);
+  }
+  /**
+   *
+   * @property {Object[]} itemParams - List of names of item-scoped custom dimensions to extract  from `items.item_params` by key.  By default `itemParams` are not added. You could add itemParams manually using `addItemParams` method.
+   * @property {String} itemParams[].name - Name of item-scoped custom dimensions.
+   * @property {String} [itemParams[].columnName] - Optional. The name of the column in the result table. If not provided the name will be the same as `itemParams[].name`.
+   * @param {'string' | 'int' | 'double' | 'float' | 'coalesce' | 'coalesce_float'} [userProperties[].type] - Optional. The type of the value in the `items.item_params` column. By default `string`.
+   * @example
+   * ```js
+   * purchase.addItemParams([
+   * { name: "color" , columnName: "item_color"},
+   * ])
+   * ```
+   * @description
+   * :::warning
+   * item_params were added to the BigQuery export late October 2023. And you can't use addItemParams for events before that date.
+   * :::
+   * In the example below the items.item_params column will be expanded and filtered for the key color. The resulting string values will be stored in items.item_color.   */
+  addItemParams(itemParams) {
+    super.addItemParams(itemParams);
+  }
+
+  /**
    * Helper method to skip unique events step. By default `where` condition is added to filter all events with `event_id` equals to null. Also `QUALIFY` statement is added to get only one event per `event_id`. But if you want to skip this step you could use this method.
    * @example
    * ```js
@@ -551,6 +658,55 @@ class Event extends DataformAction {
     if (!this._source.nonIncrementalTableEventStepWhere)
       this._source.nonIncrementalTableEventStepWhere = `event_name = '${eventName}'`;
   }
+
+  #getSqlItemParam = (paramName, paramType = "string", columnName = false) =>
+    `${helpers.getSqlUnnestParam(
+      paramName,
+      paramType,
+      null,
+      "i.item_params"
+    )} as ${columnName ? columnName : paramName}`;
+
+  #getSqlItemParams = (itemParams) => {
+    const sql = itemParams.map((itemParam) =>
+      this.#getSqlItemParam(
+        itemParam.name,
+        itemParam.type,
+        itemParam.columnName
+      )
+    );
+    return itemParams.length > 0 ? sql.join(", ") : "";
+  };
+
+  #deleteItemsIfItemsColumnExists(_columns) {
+    let columns = [..._columns];
+    if (
+      (columns.map((item) => item.name).indexOf("items") > -1) &
+      (this._itemColumns.length > 0)
+    ) {
+      columns = columns.filter((item) => item.name !== "items");
+    }
+    return columns;
+  }
+
+  #sqlItemsColumns(itemColumns) {
+    return `ARRAY(
+      SELECT AS STRUCT ${itemColumns
+        .map(
+          (item) =>
+            `${item.name} as ${item.columnName ? item.columnName : item.name}`
+        )
+        .join(", ")}
+      ${
+        this._itemParams.length > 0
+          ? `, ${this.#getSqlItemParams(this._itemParams)}`
+          : ""
+      }
+      FROM UNNEST(items) i order by 1 asc
+    ) AS items
+    `;
+  }
+
   /**
    * Main method to publish Dataform Action. This method generates SQL and then uses Dataform core [publish](https://cloud.google.com/dataform/docs/reference/dataform-core-reference#publish) method to generate incremental and non-incremental session table. This method should be overwritten in the child class.
    * @example
@@ -582,7 +738,9 @@ class Event extends DataformAction {
             user_pseudo_id,
             ${ctx.when(
               this._columns.length > 0,
-              `${helpers.getSqlColumns(this._columns)}, `
+              `${helpers.getSqlColumns(
+                this.#deleteItemsIfItemsColumnExists(this._columns)
+              )}, `
             )}
             ${ctx.when(
               this._eventParams.length > 0,
@@ -598,6 +756,10 @@ class Event extends DataformAction {
                 helpers.getSqlEventParam("page_location", "string", null),
                 this._queryParameters
               )}, `
+            )}
+            ${ctx.when(
+              this._itemColumns.length > 0,
+              `${this.#sqlItemsColumns(this._itemColumns)}, `
             )}
 
           from

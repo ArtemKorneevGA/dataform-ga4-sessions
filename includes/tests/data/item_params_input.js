@@ -218,7 +218,17 @@ const rows = [
         promotion_name: "(not set)",
         creative_name: "(not set)",
         creative_slot: "(not set)",
-        item_params: [],
+        item_params: [
+          {
+            key: "color",
+            value: {
+              string_value: "red",
+              int_value: null,
+              float_value: null,
+              double_value: null,
+            },
+          },
+        ],
       },
       {
         item_id: "product_5851_150468",
@@ -247,7 +257,17 @@ const rows = [
         promotion_name: "(not set)",
         creative_name: "(not set)",
         creative_slot: "(not set)",
-        item_params: [],
+        item_params: [
+          {
+            key: "color",
+            value: {
+              string_value: "green",
+              int_value: null,
+              float_value: null,
+              double_value: null,
+            },
+          },
+        ],
       },
     ],
     collected_traffic_source: null,
