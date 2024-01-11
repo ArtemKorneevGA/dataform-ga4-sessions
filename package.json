@@ -1,7 +1,7 @@
 {
     "dependencies": {
       "@dataform/core": "2.6.7",
-      "dataform-ga4-helpers": "https://github.com/ArtemKorneevGA/dataform-ga4-helpers/archive/refs/tags/v0.2.5.tar.gz"
+      "dataform-ga4-helpers": "https://github.com/ArtemKorneevGA/dataform-ga4-helpers/archive/refs/tags/v0.2.6.tar.gz"
     }
   }
   
