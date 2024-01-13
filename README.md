@@ -37,12 +37,12 @@ https://github.com/ArtemKorneevGA/dataform-ga4-sessions/assets/30120916/a639292e
 
 For example your `package.json` could look like this:
 
-```json
+```json {5}
 {
   "name": "my-dataform-project",
   "dependencies": {
     "@dataform/core": "2.6.7",
-    "dataform-ga4-sessions": "https://github.com/ArtemKorneevGA/dataform-ga4-sessions/archive/refs/tags/v1.0.3.tar.gz"
+    "dataform-ga4-sessions": "https://github.com/ArtemKorneevGA/dataform-ga4-sessions/archive/refs/tags/v1.0.4.tar.gz"
   }
 }
 ```

@@ -917,8 +917,16 @@ class EventFactory {
    */
   createEvent(eventConfig) {
     let sourceConfig = { ...this._source };
-    sourceConfig.incrementalTableEventStepWhere = `event_name = '${eventConfig.eventName}'`;
-    sourceConfig.nonIncrementalTableEventStepWhere = `event_name = '${eventConfig.eventName}'`;
+    const whereCondition = `event_name = '${eventConfig.eventName}'`;
+    sourceConfig.incrementalTableEventStepWhere =
+      sourceConfig.incrementalTableEventStepWhere
+        ? sourceConfig.incrementalTableEventStepWhere + ` AND ${whereCondition}`
+        : whereCondition;
+    sourceConfig.nonIncrementalTableEventStepWhere =
+      sourceConfig.nonIncrementalTableEventStepWhere
+        ? sourceConfig.nonIncrementalTableEventStepWhere +
+          ` AND ${whereCondition}`
+        : whereCondition;
     let event = new Event(sourceConfig, { tableName: eventConfig.eventName });
     if (eventConfig.eventParams) event.addEventParams(eventConfig.eventParams);
     if (eventConfig.columns) event.addColumns(eventConfig.columns);
