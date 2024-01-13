@@ -29,7 +29,7 @@
 
 ## Quick start
 
-https://github.com/ArtemKorneevGA/dataform-ga4-sessions/assets/30120916/a639292e-2069-48c4-aa91-d6d2842b7795
+https://github.com/ArtemKorneevGA/dataform-ga4-sessions/assets/30120916/b510d917-f7f6-4a15-b0ff-eb97f8f92eb5
 
 1. Initialize a new Dataform project and initialize development workspace following the instructions [here](https://cloud.google.com/dataform/docs/quickstart-create-workflow).
 
