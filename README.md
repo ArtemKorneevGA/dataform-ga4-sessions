@@ -42,7 +42,7 @@ For example your `package.json` could look like this:
   "name": "my-dataform-project",
   "dependencies": {
     "@dataform/core": "2.6.7",
-    "dataform-ga4-sessions": "https://github.com/ArtemKorneevGA/dataform-ga4-sessions/archive/refs/tags/v1.0.4.tar.gz"
+    "dataform-ga4-sessions": "https://github.com/ArtemKorneevGA/dataform-ga4-sessions/archive/refs/tags/v1.0.5.tar.gz"
   }
 }
 ```
