@@ -4,6 +4,11 @@
 
 # dataform-ga4-sessions
 
+# ⚠️ DEPRECATED ⚠️
+This repository is deprecated and no longer maintained. Please use [GA4Dataform](https://github.com/superformlabs/ga4dataform-community) instead.
+
+---
+
 `dataform-ga4-sessions` is a Dataform package to prepare session and event tables from Google Analytics 4 (GA4) BigQuery raw data.
 
 [Documentation](https://ArtemKorneevGA.github.io/dataform-ga4-sessions/) •
@@ -121,3 +126,7 @@ Contributions are welcome! The project goal is to create `dataform-ga4-sessions`
 ## Contact Information
 
 For help or feedback, please contact me on [LinkedIn](https://www.linkedin.com/in/artem-korneev/).
+
+# ⚠️ DEPRECATED ⚠️
+This repository is deprecated and no longer maintained. Please use [GA4Dataform](https://github.com/superformlabs/ga4dataform-community) instead.
+
